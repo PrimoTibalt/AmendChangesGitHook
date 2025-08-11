@@ -1,0 +1,13 @@
+#!/bin/sh
+message=$(git log -1 --pretty=%B)
+if [ "$message" == "f" ]
+then
+	stashResult=$(git stash --all)
+	git reset HEAD~
+	git add --all
+	git commit --amend --no-edit
+	if [ "$stashResult" != "No local changes to save" ]
+	then
+		git stash pop
+	fi
+fi
